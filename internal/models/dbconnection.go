@@ -46,6 +46,9 @@ func NewDBConnection(projectID string, name string, dbtype string, dbscheme, dbh
 		if !utils.ContainsString([]string{"mongodb", "mongodb+srv"}, dbscheme) {
 			return nil, errors.New("invalid dbscheme")
 		}
+
+		dbpassword = utils.ParsePwd(dbpassword)
+
 	} else {
 		return nil, errors.New("dbtype is not correct")
 	}

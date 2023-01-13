@@ -66,6 +66,20 @@ func RandString(n int) string {
 	return *(*string)(unsafe.Pointer(&b))
 }
 
+// Parse special characters in HexASCII
+func ParsePwd(p string) string {
+	sc := "~!@#$%^&*()_+{}|<>:?"
+	var s string
+	for _, v := range p {
+		if strings.Contains(sc, string(v)) {
+			s += "%" + hex.EncodeToString([]byte(string(v)))
+		} else {
+			s += string(v)
+		}
+	}
+	return s
+}
+
 func FileExtensionFromPath(path string) string {
 	if strs := strings.Split(path, "."); true {
 		slen := len(strs)
