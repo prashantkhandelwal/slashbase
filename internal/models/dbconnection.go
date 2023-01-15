@@ -2,6 +2,7 @@ package models
 
 import (
 	"errors"
+	"net/url"
 	"time"
 
 	"github.com/google/uuid"
@@ -47,7 +48,7 @@ func NewDBConnection(projectID string, name string, dbtype string, dbscheme, dbh
 			return nil, errors.New("invalid dbscheme")
 		}
 
-		dbpassword = utils.ParsePwd(dbpassword)
+		dbpassword = url.QueryEscape(dbpassword)
 
 	} else {
 		return nil, errors.New("dbtype is not correct")
