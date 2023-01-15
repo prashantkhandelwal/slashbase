@@ -37,6 +37,12 @@ const QueryEditor = ({ initialValue, initQueryName, queryId, dbType, runQuery, o
 
     const dbConnection: DBConnection | undefined = useAppSelector(selectDBConnection)
 
+    const handleKeyDown = (event: React.KeyboardEvent) => {
+        if(event.ctrlKey && event.key.toLocaleLowerCase() === 'enter') {
+            startRunningQuery()
+        }
+    }
+
     const onChange = React.useCallback((value: any) => {
         setValue(value)
     }, []);
@@ -108,6 +114,7 @@ const QueryEditor = ({ initialValue, initQueryName, queryId, dbType, runQuery, o
                     highlightActiveLine: false,
                 }}
                 onChange={onChange}
+                onKeyDown={handleKeyDown}
             />
             <div className={styles.editorBottomBar}>
                 <div className="columns">
