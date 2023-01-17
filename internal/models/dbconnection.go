@@ -41,16 +41,17 @@ func NewDBConnection(projectID string, name string, dbtype string, dbscheme, dbh
 		return nil, errors.New("useSSH is not correct")
 	}
 
-	if dbtype == qemodels.DBTYPE_POSTGRES {
+	switch dbtype {
+	case qemodels.DBTYPE_POSTGRES:
 		dbscheme = "postgres"
-	} else if dbtype == qemodels.DBTYPE_MONGO {
+	case qemodels.DBTYPE_MONGO:
 		if !utils.ContainsString([]string{"mongodb", "mongodb+srv"}, dbscheme) {
 			return nil, errors.New("invalid dbscheme")
 		}
-
 		dbpassword = url.QueryEscape(dbpassword)
-
-	} else {
+	case qemodels.DBTYPE_MYSQL:
+		dbscheme = "mysql"
+	default:
 		return nil, errors.New("dbtype is not correct")
 	}
 
@@ -93,8 +94,8 @@ func (dbConn *DBConnection) ToQEConnection() *qemodels.DBConnection {
 		DBName:      string(dbConn.DBName),
 		DBUser:      string(dbConn.DBUser),
 		DBPassword:  string(dbConn.DBPassword),
-		LoginType:   string(dbConn.LoginType),
-		UseSSH:      string(dbConn.UseSSH),
+		LoginType:   dbConn.LoginType,
+		UseSSH:      dbConn.UseSSH,
 		SSHHost:     string(dbConn.SSHHost),
 		SSHUser:     string(dbConn.SSHUser),
 		SSHPassword: string(dbConn.SSHPassword),
