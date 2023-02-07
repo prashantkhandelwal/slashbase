@@ -50,7 +50,7 @@ const QueryEditor = ({ initialValue, initQueryName, queryId, dbType, runQuery, o
     }, []);
 
     const handleKeyDown = (event: React.KeyboardEvent) => {
-        if(event.ctrlKey && event.key.toLocaleLowerCase() === 'enter') {
+        if (event.ctrlKey && event.key.toLocaleLowerCase() === 'enter') {
             startRunningQuery()
         }
     }
@@ -93,7 +93,7 @@ const QueryEditor = ({ initialValue, initQueryName, queryId, dbType, runQuery, o
 
     const formatQuery = () => {
         let formattedQuery: string = value
-        if (dbType === DBConnType.POSTGRES || dbType === DBConnType.MYSQL) {
+        if (dbType === DBConnType.POSTGRES) {
             formattedQuery = format(value, {
                 language: "postgresql",
                 keywordCase: 'upper',
@@ -101,6 +101,12 @@ const QueryEditor = ({ initialValue, initQueryName, queryId, dbType, runQuery, o
             })
         } else if (dbType === DBConnType.MONGO) {
             formattedQuery = js_beautify(value)
+        } else if (dbType == DBConnType.MYSQL) {
+            formattedQuery = format(value, {
+                language: "mysql",
+                keywordCase: 'upper',
+                linesBetweenQueries: 2,
+            })
         }
         setValue(formattedQuery)
     }
@@ -177,7 +183,7 @@ const QueryEditor = ({ initialValue, initQueryName, queryId, dbType, runQuery, o
             <Tooltip anchorId="btnSaveQuery" />
             <Tooltip anchorId="btnDelQuery" />
             <Tooltip anchorId="btnFormatQuery" />
-            <Tooltip anchorId="btnShowCheatsheet"/>
+            <Tooltip anchorId="btnShowCheatsheet" />
         </React.Fragment>
     )
 }

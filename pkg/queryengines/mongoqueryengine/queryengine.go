@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+	"sync"
 
 	"github.com/slashbaseide/slashbase/pkg/queryengines/models"
 	"github.com/slashbaseide/slashbase/pkg/queryengines/mongoqueryengine/mongoutils"
@@ -18,11 +19,13 @@ import (
 
 type MongoQueryEngine struct {
 	openClients map[string]mongoClientInstance
+	mutex       *sync.Mutex
 }
 
 func InitMongoQueryEngine() *MongoQueryEngine {
 	return &MongoQueryEngine{
 		openClients: map[string]mongoClientInstance{},
+		mutex:       &sync.Mutex{},
 	}
 }
 
@@ -41,7 +44,7 @@ func (mqe *MongoQueryEngine) RunQuery(dbConn *models.DBConnection, query string,
 		dbConn.DBPort = fmt.Sprintf("%d", sshTun.GetLocalEndpoint().Port)
 	}
 	port, _ = strconv.Atoi(string(dbConn.DBPort))
-	conn, err := mqe.getConnection(dbConn.ID, string(dbConn.DBScheme), string(dbConn.DBHost), uint16(port), string(dbConn.DBUser), string(dbConn.DBPassword))
+	conn, err := mqe.getConnection(dbConn.ID, string(dbConn.DBScheme), string(dbConn.DBHost), uint16(port), string(dbConn.DBUser), string(dbConn.DBPassword), dbConn.UseSSL)
 	if err != nil {
 		return nil, err
 	}

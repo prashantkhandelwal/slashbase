@@ -2,7 +2,7 @@ import React, { FunctionComponent, useState } from 'react'
 import { Project } from '../../data/models'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { selectProjects } from '../../redux/projectsSlice'
-import { AddDBConnPayload } from '../../network/payloads'
+import { AddDBConnPayload } from '../../events/payloads'
 import { DBConnectionUseSSHType, DBConnType } from '../../data/defaults'
 import { addNewDBConn } from '../../redux/allDBConnectionsSlice'
 import Constants from '../../constants'
@@ -25,6 +25,7 @@ const NewDBPage: FunctionComponent<{}> = () => {
     const [dbDatabase, setDBDatabase] = useState('')
     const [dbUsername, setDBUsername] = useState('')
     const [dbPassword, setDBPassword] = useState('')
+    const [dbShowPassword, setDBShowPassword] = useState<boolean>(false)
     const [dbUseSSH, setUseSSH] = useState<string>(DBConnectionUseSSHType.NONE)
     const [dbSSHHost, setSSHHost] = useState('')
     const [dbSSHUser, setSSHUser] = useState('')
@@ -32,6 +33,7 @@ const NewDBPage: FunctionComponent<{}> = () => {
     const [dbSSHKeyFile, setSSHKeyFile] = useState('')
     const [addingError, setAddingError] = useState(false)
     const [adding, setAdding] = useState(false)
+    const [dbUseSSL, setDBUseSSL] = useState(false)
 
     if (!project) {
         return <h1>Project not found</h1>
@@ -58,6 +60,7 @@ const NewDBPage: FunctionComponent<{}> = () => {
             sshUser: dbSSHUser,
             sshPassword: dbSSHPassword,
             sshKeyFile: dbSSHKeyFile,
+            useSSL: dbUseSSL,
         }
         try {
             await dispatch(addNewDBConn(payload)).unwrap()
@@ -95,7 +98,7 @@ const NewDBPage: FunctionComponent<{}> = () => {
                         </div>
                     </div>
                 </div>
-                {dbType == DBConnType.MONGO && <div className="field">
+                {dbType === DBConnType.MONGO && <div className="field">
                     <label className="label">Scheme:</label>
                     <div className="control">
                         <div className="select">
@@ -153,13 +156,22 @@ const NewDBPage: FunctionComponent<{}> = () => {
                 </div>
                 <div className="field">
                     <label className="label">Database Password:</label>
-                    <div className="control">
+                    <div className="control has-icons-right">
                         <input
                             className="input"
-                            type="password"
+                            type={dbShowPassword ? "text" : "password"}
                             value={dbPassword}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setDBPassword(e.target.value) }}
-                            placeholder="Enter database password" />
+                            placeholder="Enter database password"
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                setDBPassword(e.target.value);
+                            }}
+                        />
+                        <span
+                            className="control icon is-clickable is-small is-right"
+                            onClick={() => setDBShowPassword((prev) => !prev)}
+                        >
+                            <i className={dbShowPassword ? "fas fa-eye" : "fas fa-eye-slash"} />
+                        </span>
                     </div>
                 </div>
                 <div className="field">
@@ -190,6 +202,17 @@ const NewDBPage: FunctionComponent<{}> = () => {
                         </select>
                     </div>
                 </div>
+                {dbType === DBConnType.MONGO && <div className="field">
+                    <label className="checkbox">
+                        <input
+                            type="checkbox"
+                            defaultChecked={false}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setDBUseSSL(e.target.checked) }} />
+                        &nbsp;Enable SSL
+                        <span className="help">If you are connecting to database which enforce/require SSL connection. (Example: Azure CosmosDB)</span>
+                    </label>
+                </div>}
+
                 {dbUseSSH !== DBConnectionUseSSHType.NONE &&
                     <React.Fragment>
                         <div className="field">

@@ -12,13 +12,16 @@
   <a href="https://discord.gg/U6fXgm3FAX">
     <img src="https://img.shields.io/discord/1039799991776067615?label=discord" alt="Discord">
   </a>
+  <a href="https://www.codefactor.io/repository/github/slashbaseide/slashbase">
+    <img src="https://www.codefactor.io/repository/github/slashbaseide/slashbase/badge" alt="CodeFactor" />
+   </a>
 </p>
 <p align="center">
-  <a href="https://discord.gg/U6fXgm3FAX">Join Discord Community</a>
+  <a href="https://discord.gg/U6fXgm3FAX">Join Discord</a>
   ·
-  <a href="https://slashbase.bip.wiki">Explore the docs</a>
+  <a href="https://slashbase.bip.wiki">Read docs</a>
   ·
-  <a href="https://slashbase.com/updates">Read Updates</a>
+  <a href="https://slashbase.com/updates">What's new</a>
   <br/><br/>
   <a href="#installation" rel="dofollow"><strong>Install Now »</strong></a>
 </p>
@@ -26,13 +29,14 @@
 
 # About
 
-Slashbase is a modern in-browser database IDE & CLI for your dev/data workflows. Use Slashbase to connect to any of your database, browse data and schema, write, run and save queries, create charts, right from your browser. Supports PostgreSQL and MongoDB.
+Slashbase is a modern database IDE for your dev/data workflows. Use Slashbase to connect to any of your database, browse data and schema, write, run and save queries, create charts. Supports MySQL, PostgreSQL and MongoDB.
 
-It is in beta (v0.4), help us make it better by sending your feedback and reach a stable (v1.0) version.
+It is in beta (v0.6), help us make it better by sending your feedback and reach a stable (v1.0) version.
+> Star 🌟 & watch 👀 the repository to get updates.
 
 ## Features:
 
-- **🧑‍💻 Browser & CLI based**: Use as IDE in your browser or as CLI in terminal.
+- **🧑‍💻 Desktop App**: Use the IDE as standalone desktop app.
 - **🪄 Modern Interface**: With a modern interface, it is easy to use.
 - **🪶 Lightweight**: Doesn't take much space on your system.
 - **⚡️ Quick Browse**: Quickly filter, sort & browse data and schema with a low-code UI.
@@ -40,78 +44,40 @@ It is in beta (v0.4), help us make it better by sending your feedback and reach 
 - **📊 Create Charts**: Create charts from your query results.
 - **🗂 Projects**: Organise all database connections into various projects.
 - **📕 Query Cheatsheets**: Search for query commands right inside IDE, no need to search online when you forget query syntax.
-- **✅ Database Support**: PostgreSQL and MongoDB.
+- **✅ Database Support**: MySQL, PostgreSQL and MongoDB.
 
-### In browser
-<img src="https://raw.githubusercontent.com/slashbaseide/.github/main/screenshot.png" alt="Slashbase IDE" width="100%">
+## Screenshots
+<img src="https://raw.githubusercontent.com/slashbaseide/.github/main/screenshot.png" alt="Run query view" width="100%">
+<img src="https://raw.githubusercontent.com/slashbaseide/.github/main/screenshot2.png" alt="Low-code view" width="100%">
 
-### In terminal
-<p align="center">
-  <img src="https://raw.githubusercontent.com/slashbaseide/.github/main/slashbase-cli.gif" alt="Slashbase CLI" width="75%">
-</p>
+
+# Slashbase Cloud
+
+Use Slashbase as a cloud-hosted in-browser collaborative database IDE. Visit [slashbase.com](https://slashbase.com)
 
 # Installation
 
-The app should be installed on your desktop/laptop and should used as a part of your local development enviroment. Follow the steps below to download & start the app:
+## Direct Download
 
-## Mac OS
+Follow the steps below to download & start the app:
 
-### Using Homebrew
-```
-brew install slashbaseide/brew/slashbase
-```
-
-### Download Binary
 1. Download the [latest release](https://github.com/slashbaseide/slashbase/releases) and extract the zip.
-2. Run `./slashbase` on terminal to start the app.
+2. Double click the Slashbase file to open the app on Window and MacOS. For linux, run `./Slashbase` on terminal to start the app.
 
-## Linux
+On Mac if you see the error message popup:
 
-### Download Binary
-1. Download the [latest release](https://github.com/slashbaseide/slashbase/releases) and extract the zip.
-2. Run `./slashbase` on terminal to start the app.
+- Open terminal and run `xattr -cr /path/to/Slashbase.app` and then run the app.
 
-## Windows
+## Build from source
 
-### Using Scoop
+Follow the steps build & start the app:
 
-```
-scoop bucket add kulfi-scoop https://github.com/Animesh-Ghosh/kulfi-scoop
-scoop install slashbase
-```
+1. Clone the repository or download the zip.
+2. Make sure Go and Wails is installed. Follow the steps [here](https://wails.io/docs/gettingstarted/installation), if not installed.
+3. Open the terminal at root directory and run `make build`.
+4. The app is created in `build/bin`. 
+5. Double click the Slashbase file to open the app on Window and MacOS. For linux, run `./Slashbase` on terminal to start the app.
 
-If you don't have scoop installed on windows:
-```
-iwr -useb get.scoop.sh | iex
-```
-
-### Download Binary
-1. Download the [latest release](https://github.com/slashbaseide/slashbase/releases) and extract the zip.
-2. Run `slashbase` on cmd terminal to start the app.
-
-# Usage
-
-## Slashbase CLI
-
-Run slashbase:
-```
-slashbase
-```
-
-Check slashbase version:
-```
-slashbase version
-```
-
-View slashbase help:
-```
-slashbase help
-```
-
-## Slashbase IDE
-To connect to Slashbase IDE:
-1. Make sure Slashbase is running
-2. Visit http://localhost:22022
 
 # Documentation
 
@@ -126,7 +92,7 @@ Join our community on [discord](https://discord.gg/U6fXgm3FAX) and [bip](https:/
 ### Database Support
 - ✅ PostgreSQL Query Engine
 - ✅ MongoDB Query Engine
-- ☑️ MySQL Query Engine
+- ✅ MySQL Query Engine
 - ☑️ SQLite Query Engine
 - ☑️ Redis Query Engine
 
